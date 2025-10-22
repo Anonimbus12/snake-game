@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Epic Seven x Frieren</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #e6e6e6;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .game-header {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+      background: rgba(30, 30, 46, 0.8);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-poster {
+      flex: 0 0 280px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .game-poster img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .game-info {
+      flex: 1;
+    }
+
+    .game-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .developer {
+      font-size: 16px;
+      color: #a0a0a0;
+      margin-bottom: 20px;
+    }
+
+    .rating-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .rating {
+      background-color: #3a3a5d;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .rating-value {
+      color: #ffcc00;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4a6bff 0%, #3a5bef 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(74, 107, 255, 0.3);
+      position: relative;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(74, 107, 255, 0.4);
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid lightblue;
+      border-top: 3px solid orange;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid #4a6bff;
+      color: #4a6bff;
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(74, 107, 255, 0.1);
+    }
+
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      color: #a0a0a0;
+      font-size: 14px;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .game-header {
+        flex-direction: column;
+      }
+
+      .game-poster {
+        flex: 0 0 auto;
+        max-width: 280px;
+        margin: 0 auto;
+      }
+
+      .action-buttons {
+        justify-content: center;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="game-header">
+      <div class="game-poster">
+        <img src="ulargame.jpg" alt="Epic Seven x Frieren Game Poster">
+      </div>
+
+      <div class="game-info">
+        <h1 class="game-title">snake game</h1>
+        <div class="action-buttons">
+          <button id="playButton" class="btn btn-primary">
+            <span class="button-text">▶ Play</span>
+            <div class="spinner" id="spinner"></div>
+          </button>
+
+          <a href="#" class="btn btn-outline">Bagikan</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      &copy; snake game
+    </div>
+  </div>
+
+  <script>
+    const playButton = document.getElementById("playButton");
+    const spinner = document.getElementById("spinner");
+    const buttonText = document.querySelector(".button-text");
+
+    playButton.addEventListener("click", function () {
+      buttonText.style.display = "none";
+      spinner.style.display = "block";
+      playButton.disabled = true;
+
+      setTimeout(function () {
+        window.location.href = "play.html";
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
