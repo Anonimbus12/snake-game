@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Epic Seven x Frieren</title>
+  <title>Snake Game</title>
   <style>
     * {
       margin: 0;
@@ -32,14 +32,14 @@
       background: rgba(30, 30, 46, 0.8);
       border-radius: 16px;
       padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     .game-poster {
       flex: 0 0 280px;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
     }
 
     .game-poster img {
@@ -57,35 +57,7 @@
       font-weight: 700;
       margin-bottom: 10px;
       color: #fff;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .developer {
-      font-size: 16px;
-      color: #a0a0a0;
-      margin-bottom: 20px;
-    }
-
-    .rating-section {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .rating {
-      background-color: #3a3a5d;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .rating-value {
-      color: #ffcc00;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
     .action-buttons {
@@ -93,6 +65,7 @@
       flex-wrap: wrap;
       gap: 15px;
       margin: 25px 0;
+      align-items: center;
     }
 
     .btn {
@@ -111,13 +84,37 @@
     .btn-primary {
       background: linear-gradient(135deg, #4a6bff 0%, #3a5bef 100%);
       color: white;
-      box-shadow: 0 4px 12px rgba(74, 107, 255, 0.3);
-      position: relative;
+      box-shadow: 0 4px 12px rgba(74,107,255,0.3);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(74, 107, 255, 0.4);
+      box-shadow: 0 6px 15px rgba(74,107,255,0.4);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid #4a6bff;
+      color: #4a6bff;
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(74,107,255,0.1);
+    }
+
+    /* --- NEW: dropdown skin --- */
+    .skin-select {
+      padding: 12px 15px;
+      border-radius: 8px;
+      background-color: #2d2d4d;
+      border: 1px solid #4a6bff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .skin-select option {
+      background: #1a1a2e;
     }
 
     .spinner {
@@ -134,16 +131,6 @@
       to { transform: rotate(360deg); }
     }
 
-    .btn-outline {
-      background-color: transparent;
-      border: 1px solid #4a6bff;
-      color: #4a6bff;
-    }
-
-    .btn-outline:hover {
-      background-color: rgba(74, 107, 255, 0.1);
-    }
-
     .footer {
       margin-top: 50px;
       text-align: center;
@@ -158,19 +145,16 @@
         flex-direction: column;
       }
 
-      .game-poster {
-        flex: 0 0 auto;
-        max-width: 280px;
-        margin: 0 auto;
-      }
-
       .action-buttons {
         justify-content: center;
       }
 
       .btn {
         width: 100%;
-        justify-content: center;
+      }
+
+      .skin-select {
+        width: 100%;
       }
     }
   </style>
@@ -178,13 +162,27 @@
 <body>
   <div class="container">
     <div class="game-header">
+
       <div class="game-poster">
-        <img src="ulargame.jpg" alt="Epic Seven x Frieren Game Poster">
+        <img src="ulargame.jpg" alt="Snake Game Poster">
       </div>
 
       <div class="game-info">
-        <h1 class="game-title">snake game</h1>
+        <h1 class="game-title">Snake Game</h1>
+
         <div class="action-buttons">
+          
+          <!-- NEW: Dropdown pilih skin -->
+          <select id="skinSelect" class="skin-select">
+            <option value="#00ff00">Hijau (Default)</option>
+            <option value="#ff0000">Merah</option>
+            <option value="#00ffff">Cyan</option>
+            <option value="#ffff00">Kuning</option>
+            <option value="#ff00ff">Ungu</option>
+            <option value="#ffffff">Putih</option>
+            <option value="#ffa500">Oranye</option>
+          </select>
+
           <button id="playButton" class="btn btn-primary">
             <span class="button-text">▶ Play</span>
             <div class="spinner" id="spinner"></div>
@@ -196,7 +194,7 @@
     </div>
 
     <div class="footer">
-      &copy; snake game
+      &copy; Snake Game
     </div>
   </div>
 
@@ -204,6 +202,17 @@
     const playButton = document.getElementById("playButton");
     const spinner = document.getElementById("spinner");
     const buttonText = document.querySelector(".button-text");
+    const skinSelect = document.getElementById("skinSelect");
+
+    // NEW: simpan skin yang dipilih
+    skinSelect.addEventListener("change", () => {
+      localStorage.setItem("snakeSkin", skinSelect.value);
+    });
+
+    // NEW: set default skin jika belum ada
+    if (!localStorage.getItem("snakeSkin")) {
+      localStorage.setItem("snakeSkin", "#00ff00");
+    }
 
     playButton.addEventListener("click", function () {
       buttonText.style.display = "none";
